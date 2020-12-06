@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({
-  partials: ['MESSAGE']
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 require('dotenv').config();
 
@@ -14,6 +14,18 @@ client.on('message', msg =>{
   }
   if (msg.content == '+add among us'){
     addRole(msg.member,'785120209752293387');
+  }
+})
+
+client.on('messageReactionAdd', async (reaction, user) => {
+  if (reaction.message.partial) await reaction.message.fetch();
+  if (reaction.partial) await reaction.fetch();
+
+  if (user.bot) return;
+  if (reaction.message.id == '785132049463115798'){
+    if (reaction.emoji.name === '🔪'){
+      await reaction.message.guild.members.cache.get(user.id).roles.add('785120209752293387');
+    }
   }
 })
 
