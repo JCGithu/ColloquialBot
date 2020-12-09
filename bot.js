@@ -13,8 +13,7 @@ const roles = {
   },
   "Age of Mythology":{
     "emoji": "🔱",
-    "id": "784799109990842398",
-    "server": personal
+    "id": "784799109990842398"
   },
   "Codenames":{
     "emoji": "🕵️‍♂️",
