@@ -6,14 +6,10 @@ const client = new Discord.Client({
 });
 require('dotenv').config();
 
-const personal = '692853487104688158';
-const twitch = '772398840954748948';
-
 const roles = {
   "Among Us": {
     "emoji": "🔪",
-    "id": '785120209752293387',
-    "server": personal
+    "id": '785120209752293387'
   },
   "Age of Mythology":{
     "emoji": "🔱",
@@ -22,23 +18,19 @@ const roles = {
   },
   "Codenames":{
     "emoji": "🕵️‍♂️",
-    "id": "785154460929753089",
-    "server": personal
+    "id": "785154460929753089"
   },
   "D&D":{
     "emoji":"🐉",
-    "id": "785155885583433728",
-    "server": personal
+    "id": "785155885583433728"
   },
   "Jackbox Games":{
     "emoji": "📦",
-    "id": "785155943213301761",
-    "server": personal
+    "id": "785155943213301761"
   },
   "FIFA":{
     "emoji": "⚽",
-    "id": "785993682197151786",
-    "server": personal
+    "id": "785993682197151786"
   }
 }
 
@@ -74,11 +66,13 @@ async function roleChange(reaction, user, add){
   if (reaction.message.id == '785132049463115798'){
     for (role in roles){
       roleInfo = roles[role];
-      if (reaction.emoji.name === roleInfo.emoji && roleInfo.server == user.guild){
+      if (reaction.emoji.name === roleInfo.emoji){
         if (add == true){
           await reaction.message.guild.members.cache.get(user.id).roles.add(roleInfo.id);
+          console.log(user.username + ' added the role ' + role + roleInfo.emoji)
         } else {
           await reaction.message.guild.members.cache.get(user.id).roles.remove(roleInfo.id);
+          console.log(user.username + ' removed the role ' + role + roleInfo.emoji)
         }
       }
     }
