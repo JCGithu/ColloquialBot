@@ -33,7 +33,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
 bot.on('guildMemberAdd', member => {
   console.log('User' + member.user.tag + 'has joined the server!');
   console.log(member)
-}
+})
 
 async function roleChange(reaction, user, add){
   if (reaction.message.partial) await reaction.message.fetch();
