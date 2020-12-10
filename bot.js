@@ -30,13 +30,18 @@ client.on('messageReactionRemove', async (reaction, user) => {
   roleChange(reaction, user, false);
 })
 
+bot.on('guildMemberAdd', member => {
+  console.log('User' + member.user.tag + 'has joined the server!');
+  console.log(member)
+}
+
 async function roleChange(reaction, user, add){
   if (reaction.message.partial) await reaction.message.fetch();
   if (reaction.partial) await reaction.fetch();
 
   if (user.bot) return;
   if (reaction.message.id == '785132049463115798' || reaction.message.id == '786549352809758730'){
-
+    console.log('reaction made')
     fs.readFile(path.resolve(__dirname, './roles.json'), async (err, data) => {
       if (err) throw err;
       let roles = JSON.parse(data);
