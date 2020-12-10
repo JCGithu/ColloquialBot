@@ -35,7 +35,7 @@ async function roleChange(reaction, user, add){
   if (reaction.partial) await reaction.fetch();
 
   if (user.bot) return;
-  if (reaction.message.id == '785132049463115798'){
+  if (reaction.message.id == '785132049463115798' || reaction.message.id == '786549352809758730'){
 
     fs.readFile(path.resolve(__dirname, './roles.json'), async (err, data) => {
       if (err) throw err;
