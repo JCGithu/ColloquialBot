@@ -30,7 +30,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
   roleChange(reaction, user, false);
 })
 
-bot.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', member => {
   console.log('User' + member.user.tag + 'has joined the server!');
   console.log(member)
 })
