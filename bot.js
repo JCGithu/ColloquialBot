@@ -41,7 +41,7 @@ async function roleChange(reaction, user, add){
 
   if (user.bot) return;
   if (reaction.message.id == '785132049463115798' || reaction.message.id == '786549352809758730'){
-    console.log(reaction.emoji)
+    console.log(reaction.emoji.name)
     fs.readFile(path.resolve(__dirname, './roles.json'), async (err, data) => {
       if (err) throw err;
       let roles = JSON.parse(data);
