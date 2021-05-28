@@ -78,6 +78,7 @@ app.post('/webhook', (req, res) => {
   if (req.body.subscription.type === 'stream.online') {
     console.log('Stream is online! 📹');
   }
+  res.send('Recieved');
 });
 
 client.login(process.env.BOT_TOKEN);
