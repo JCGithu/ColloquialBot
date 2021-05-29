@@ -28,6 +28,7 @@ client.on('ready', () => {
   app.post('/webhook', (req, res) => {
     if (req.body.subscription.type === 'stream.online') {
       console.log('Stream is online! 📹');
+      console.log(req.body);
       targetChannel.send(`<@786544562193432628> ${liveMessage} https://twitch.tv/colloquialowl`);
       liveMessage = newLiveMessage();
     }
