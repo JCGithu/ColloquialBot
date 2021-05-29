@@ -6,7 +6,7 @@ const client = new Discord.Client({
 });
 require('dotenv').config();
 
-let roles = fs.readFile(path.resolve(__dirname, './roles.json'), async (err, data) => {
+let roles = fs.readFile(path.resolve(__dirname, './data/roles.json'), async (err, data) => {
   return JSON.parse(data);
 });
 
