@@ -24,11 +24,11 @@ let liveMessage = newLiveMessage();
 
 client.on('ready', () => {
   console.log('Webhook bot ready ✅');
+  let targetChannel = client.channels.cache.get(`772497072653336586`);
   app.post('/webhook', (req, res) => {
     if (req.body.subscription.type === 'stream.online') {
       console.log('Stream is online! 📹');
-      //console.log(req.body);
-      client.channels.cache.get(`772497072653336586`).send(`@Stream ${liveMessage} https://twitch.tv/colloquialowl`);
+      targetChannel.send(`<@786544562193432628> ${liveMessage} https://twitch.tv/colloquialowl`);
       liveMessage = newLiveMessage();
     }
     res.send('Recieved');

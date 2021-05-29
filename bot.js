@@ -12,6 +12,7 @@ let roles = fs.readFile(path.resolve(__dirname, './data/roles.json'), async (err
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
+  client.channels.cache.get(`772497072653336586`).send(`another test <@375630644723843095>`);
 });
 
 client.on('guildMemberAdd', (user) => {
