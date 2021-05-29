@@ -6,17 +6,12 @@ const client = new Discord.Client({
 });
 require('dotenv').config();
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express().use(bodyParser.json());
-app.listen(process.env.PORT || 500, () => console.log('webhook is listening'));
-
 let roles = fs.readFile(path.resolve(__dirname, './roles.json'), async (err, data) => {
   return JSON.parse(data);
 });
 
 client.on('ready', () => {
-  console.log('ColloquialBot ready');
+  console.log('Discord bot is ready! ✅');
 });
 
 client.on('guildMemberAdd', (user) => {
@@ -73,12 +68,5 @@ async function roleChange(reaction, user, add) {
     }
   }
 }
-
-app.post('/webhook', (req, res) => {
-  if (req.body.subscription.type === 'stream.online') {
-    console.log('Stream is online! 📹');
-  }
-  res.send('Recieved');
-});
 
 client.login(process.env.BOT_TOKEN);
