@@ -5,14 +5,32 @@ const client = new Discord.Client({
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 require('dotenv').config();
+const ComfyJS = require('comfy.js');
 
-let roles = fs.readFile(path.resolve(__dirname, './data/roles.json'), async (err, data) => {
-  return JSON.parse(data);
-});
+//Data Files
+const roles = require('./data/roles.json');
+const liveMessages = require('./data/liveMessages.json');
+const cheezoid = require('./data/cheezoid.json');
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function newRandomMessage(targetFile) {
+  return targetFile[getRandomInt(targetFile.length - 1)];
+}
+
+ComfyJS.Init('ColloquialOwl');
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
-  client.channels.cache.get(`772497072653336586`).send(`another test <@375630644723843095>`);
+  ComfyJS.onCommand = (user, command, message, flags, extra) => {
+    if (flags.broadcaster && command === 'notify') {
+      client.channels.cache
+        .get(`772497072653336586`)
+        .send(`<@&786544562193432628> ${newRandomMessage(liveMessages)} https://twitch.tv/colloquialowl`);
+    }
+  };
 });
 
 client.on('guildMemberAdd', (user) => {
@@ -22,18 +40,7 @@ client.on('guildMemberAdd', (user) => {
 client.on('message', (msg) => {
   if (msg.content === 'hello bot!') msg.channel.send('Hi yourself ;)');
   if (msg.content === '!cheezoid') {
-    let deathName = Math.floor(Math.random() * 10);
-    if (deathName === 3) {
-      msg.channel.send('CHEEZOID ONLY KNOWS PAIN 😟');
-      return;
-    }
-    let random_boolean = Math.random() < 0.5;
-    if (random_boolean) {
-      msg.channel.send('CHEESE 🧀');
-      return;
-    }
-    msg.channel.send('PETRIL ⛽');
-    return;
+    msg.channel.send(newRandomMessage(cheezoid));
   }
 });
 
@@ -58,7 +65,7 @@ async function roleChange(reaction, user, add) {
     for (role in roles) {
       roleInfo = roles[role];
       if (reaction.emoji.name === roleInfo.emoji) {
-        if (add === true) {
+        if (add) {
           await reaction.message.guild.members.cache.get(user.id).roles.add(roleInfo.id);
           console.log(`${user.username} added the role ${role} ${roleInfo.emoji}`);
         } else {
