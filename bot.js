@@ -11,6 +11,7 @@ const ComfyJS = require('comfy.js');
 const roles = require('./data/roles.json');
 const liveMessages = require('./data/liveMessages.json');
 const cheezoid = require('./data/cheezoid.json');
+const hello = require('./data/hello.json');
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -38,10 +39,8 @@ client.on('guildMemberAdd', (user) => {
 });
 
 client.on('message', (msg) => {
-  if (msg.content === 'hello bot!') msg.channel.send('Hi yourself ;)');
-  if (msg.content === '!cheezoid') {
-    msg.channel.send(newRandomMessage(cheezoid));
-  }
+  if (msg.content === 'hello!') msg.channel.send(newRandomMessage(hello));
+  if (msg.content === '!cheezoid') msg.channel.send(newRandomMessage(cheezoid));
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
