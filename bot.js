@@ -6,6 +6,7 @@ const client = new Discord.Client({
 });
 require('dotenv').config();
 const ComfyJS = require('comfy.js');
+const PORT = process.env.PORT || 5000;
 
 //Data Files
 const roles = require('./data/roles.json');
@@ -38,6 +39,9 @@ client.on('ready', () => {
       if (command === newBasic){
         ComfyJS.Say(basicTwitch[basic]);
       }
+    }
+    if (command === 'cheezoid'){
+      ComfyJS.Say(newRandomMessage(cheezoid));
     }
   };
 });
