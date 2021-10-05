@@ -12,6 +12,7 @@ const roles = require('./data/roles.json');
 const liveMessages = require('./data/liveMessages.json');
 const cheezoid = require('./data/cheezoid.json');
 const hello = require('./data/hello.json');
+const basicTwitch = require('./data/basicTwitch.json');
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -21,7 +22,8 @@ function newRandomMessage(targetFile) {
   return targetFile[getRandomInt(targetFile.length - 1)];
 }
 
-ComfyJS.Init('ColloquialOwl');
+//ComfyJS.Init('ColloquialOwl');
+ComfyJS.Init( process.env.TWITCHUSER, process.env.OAUTH, 'ColloquialOwl' );
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
@@ -30,6 +32,12 @@ client.on('ready', () => {
       client.channels.cache
         .get(`772497072653336586`)
         .send(`<@&786544562193432628> ${newRandomMessage(liveMessages)} https://twitch.tv/colloquialowl`);
+    }
+    for (let basic in basicTwitch){
+      let newBasic = basic.substring(1);
+      if (command === newBasic){
+        ComfyJS.Say(basicTwitch[basic]);
+      }
     }
   };
 });
