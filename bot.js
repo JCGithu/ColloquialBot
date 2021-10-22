@@ -1,12 +1,11 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
 const client = new Discord.Client({
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
-require('dotenv').config();
 const ComfyJS = require('comfy.js');
-const PORT = process.env.PORT || 5000;
 
 //Data Files
 const roles = require('./data/roles.json');
@@ -24,7 +23,7 @@ function newRandomMessage(targetFile) {
 }
 
 //ComfyJS.Init('ColloquialOwl');
-ComfyJS.Init( process.env.TWITCHUSER, process.env.OAUTH, 'ColloquialOwl' );
+ComfyJS.Init(process.env.TWITCHUSER, process.env.OAUTH, 'ColloquialOwl' );
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
