@@ -22,8 +22,14 @@ function newRandomMessage(targetFile) {
   return targetFile[getRandomInt(targetFile.length - 1)];
 }
 
+const twitchChannels = ['ColloquialOwl']; 
+let repeatList, loop;
+for (let tCh in twitchChannels){
+  repeatList[twitchChannels[tCh]] = '';
+}
+
 //ComfyJS.Init('ColloquialOwl');
-ComfyJS.Init(process.env.TWITCHUSER, process.env.OAUTH, 'ColloquialOwl' );
+ComfyJS.Init(process.env.TWITCHUSER, process.env.OAUTH, twitchChannels );
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
@@ -43,6 +49,17 @@ client.on('ready', () => {
       ComfyJS.Say(newRandomMessage(cheezoid));
     }
   };
+  ComfyJS.onChat = ( user, message, flags, self, extra ) => {
+    if (repeatList[extra.channel] === message){
+      loop = ++loop;
+    } else {
+      if (loop > 2){
+        ComfyJS.Say(`That was a streak of ${loop} messages! Nice!`);
+      }
+      loop = 1;
+    }
+    repeatList[extra.channel] = message;
+  }
 });
 
 client.on('guildMemberAdd', (user) => {
