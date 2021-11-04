@@ -23,7 +23,7 @@ function newRandomMessage(targetFile) {
 }
 
 const twitchChannels = ['ColloquialOwl']; 
-let repeatList, loop;
+let repeatList = {}, loop = 1;
 for (let tCh in twitchChannels){
   repeatList[twitchChannels[tCh]] = '';
 }
