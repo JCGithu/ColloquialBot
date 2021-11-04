@@ -52,13 +52,16 @@ client.on('ready', () => {
   ComfyJS.onChat = ( user, message, flags, self, extra ) => {
     if (repeatList[extra.channel] === message){
       loop = ++loop;
+      repeatList[extra.channel] = message;
+      return;
     } else {
       if (loop > 2){
         ComfyJS.Say(`That was a streak of ${loop} messages! Nice!`);
       }
       loop = 1;
+      repeatList[extra.channel] = message;
+      return;
     }
-    repeatList[extra.channel] = message;
   }
 });
 
