@@ -1,0 +1,1 @@
+module.exports = ()=> {return "Hey! Jump In! https://discord.gg/yyFJzVpaGP"}

@@ -1,0 +1,1 @@
+module.exports = () => {return "https://colloquial.studio/commands"}

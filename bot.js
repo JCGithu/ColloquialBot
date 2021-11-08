@@ -5,64 +5,77 @@ const Discord = require('discord.js');
 const client = new Discord.Client({
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
-const ComfyJS = require('comfy.js');
+const tmi = require('tmi.js');
+
+const newRandomMessage = require('./tools/randomMessage');
+const getRandomInt = require('./tools/getRandomInt.js');
+const getDirectories = require('./tools/getDirectories');
 
 //Data Files
 const roles = require('./data/roles.json');
-const liveMessages = require('./data/liveMessages.json');
-const cheezoid = require('./data/cheezoid.json');
-const hello = require('./data/hello.json');
-const basicTwitch = require('./data/basicTwitch.json');
+//const basicTwitch = require('./twitch/colloquialowl/basic.json');
+//const listTwitch = require('./twitch/colloquialowl/lists.json');
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+const listDiscord = require('./discord/colloquialowl/lists.json');
 
-function newRandomMessage(targetFile) {
-  return targetFile[getRandomInt(targetFile.length - 1)];
-}
-
-const twitchChannels = ['ColloquialOwl']; 
-let repeatList = {}, loop = 1;
+const twitchChannels = ['colloquialowl']; 
+let repeatList = {}, loop = 1
 for (let tCh in twitchChannels){
   repeatList[twitchChannels[tCh]] = '';
 }
 
-//ComfyJS.Init('ColloquialOwl');
-ComfyJS.Init(process.env.TWITCHUSER, process.env.OAUTH, twitchChannels );
+let commands = {};
+for (let chan of twitchChannels){
+  commands[chan] = [];
+  let dir = `./twitch/${chan}`
+  let files = fs.readdirSync(dir);
+  for (const file of files) {
+    commands[chan].push(path.parse(file).name);
+  }
+}
 
 client.on('ready', () => {
   console.log('Discord bot is ready! ✅');
-  ComfyJS.onCommand = (user, command, message, flags, extra) => {
-    if (flags.broadcaster && command === 'notify') {
-      client.channels.cache
-        .get(`772497072653336586`)
-        .send(`<@&786544562193432628> ${newRandomMessage(liveMessages)} https://twitch.tv/colloquialowl`);
-    }
-    for (let basic in basicTwitch){
-      let newBasic = basic.substring(1);
-      if (command === newBasic){
-        ComfyJS.Say(basicTwitch[basic]);
+
+  const twitch = new tmi.Client({
+    options: { debug: false, messagesLogLevel: "info" },
+    connection: {
+      reconnect: true,
+      secure: true
+    },
+    identity: {
+      username: process.env.TWITCHUSER,
+      password: process.env.OAUTH,
+    },
+    channels: twitchChannels
+  });
+
+  twitch.connect().catch(console.error);
+  twitch.on("connected", () => {console.log('Twitch bot is ready! ✅')});
+
+  twitch.on('message', (channel, tags, message, self) => {
+    if(self) return;
+    let channelName = channel.substring(1);
+    let channelCommands = commands[channelName]
+    if (message.charAt(0) === '!'){
+      let command = message.substring(1).toLowerCase().split(' ')[0];
+      for (let cc in channelCommands){
+        if (command === channelCommands[cc]) {
+          var codeToRun = require(`./twitch/${channelName}/${command}`);
+          twitch.say(channel, codeToRun(channel, tags, message, client));
+          return;
+        };
       }
     }
-    if (command === 'cheezoid'){
-      ComfyJS.Say(newRandomMessage(cheezoid));
-    }
-  };
-  ComfyJS.onChat = ( user, message, flags, self, extra ) => {
-    if (repeatList[extra.channel] === message){
+    if (repeatList[channel] === message){
       loop = ++loop;
-      repeatList[extra.channel] = message;
-      return;
+      repeatList[channel] = message;
     } else {
-      if (loop > 2){
-        ComfyJS.Say(`That was a streak of ${loop} messages! Nice!`);
-      }
+      if (loop > 2) twitch.say(channel, `/me ${loop} message streak!`);
       loop = 1;
-      repeatList[extra.channel] = message;
-      return;
+      repeatList[channel] = message;
     }
-  }
+  });
 });
 
 client.on('guildMemberAdd', (user) => {
@@ -70,8 +83,12 @@ client.on('guildMemberAdd', (user) => {
 });
 
 client.on('message', (msg) => {
-  if (msg.content === 'hello!') msg.channel.send(newRandomMessage(hello));
-  if (msg.content === '!cheezoid') msg.channel.send(newRandomMessage(cheezoid));
+  if (msg.content.charAt(0) === '!'){
+    let command = msg.content.substring(1).toLowerCase().split(' ')[0];
+    for (let list in listDiscord){
+      if (command === list) msg.channel.send(listDiscord[list][getRandomInt(listTwitch[list].length)]);
+    }
+  }
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
@@ -80,10 +97,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 client.on('messageReactionRemove', async (reaction, user) => {
   roleChange(reaction, user, false);
-});
-
-client.on('guildMemberAdd', (member) => {
-  console.log('User' + member.user.tag + 'has joined the server!');
 });
 
 async function roleChange(reaction, user, add) {
