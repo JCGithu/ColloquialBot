@@ -18,7 +18,7 @@ let houseData = {
     "desirelinesgames":{
         "name": "Tigger and Red Penguin",
         "district": "Main District",
-        "num": 2
+        "num": 4
     },
     "lydiapancakes": {
         "district": "Main District"
@@ -32,7 +32,8 @@ let houseData = {
         "district": "Main District"
     },
     "arcanetempest": {
-        "name": "Hellequin",
+        "name": "Hellequin & 水",
+        "num": 2,
         "district": "Main District",
         "additional":  "and an entire library in the Raid District"
     },
@@ -44,7 +45,8 @@ let houseData = {
         "district": "Main District"
     },
     "hellovonnie": {
-        "district": "Main District"
+        "district": "Main District",
+        "num": 2
     },
     "coco__glez":{
         "district": "Main District",
@@ -81,12 +83,13 @@ let houseData = {
         "district": "Main District" 
     },
     "letsbrock":{
+        "name": "Hampster House and Pozza Check",
         "district": "Main & Raid districts",
         "num": 2,
     },
     "ladyfreya151":{
         "district": "Main District",
-        "num": 3,
+        "num": 4,
     },
     "erjima":{
         "district": "Main District",
@@ -133,7 +136,63 @@ let houseData = {
     },
     "coollike":{
         "district": "Main District",
-    }
+    },
+    "drawn_sean":{
+        "district": "Main District",
+    },
+    "erjima":{
+        "num": 2,
+        "district": "Main District",
+    },
+    "halmal_productions":{
+        "num": 2,
+        "district": "Main District",
+    },
+    "halmal_productions":{
+        "num": 2,
+        "district": "Main District",
+    },
+    "helenagaifem":{
+        "district": "Main District",
+    },
+    "jess_face":{
+        "district": "Main District",
+    },
+    "kuillus":{
+        "district": "Main District",
+        "num": 2,
+    },
+    "leighsterkeeeester":{
+        "district": "Main District",
+    },
+    "melosprout":{
+        "district": "Main District",
+    },
+    "nataliacaronte":{
+        "district": "Main District",
+    },
+    "naxprime":{
+        "district": "Main District",
+    },
+    "queerladyface":{
+        "district": "Main District",
+    },
+    "seph020":{
+        "district": "Main District",
+    },
+    "shockingstrawberry":{
+        "district": "Main District",
+    },
+    "trueellie":{
+        "num":2,
+        "district": "Main District",
+    },
+    "worriedbee":{
+        "district": "Main District",
+    },
+    "xoxnatasha":{
+        "district": "Main District",
+    },
 };
 
 module.exports = (channel, tags, message, client) => {
