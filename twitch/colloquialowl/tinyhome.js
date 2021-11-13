@@ -197,7 +197,6 @@ let houseData = {
 
 module.exports = (channel, tags, message, client) => {
     let user = '', printUser = '';
-    console.log(message);
     if (message === '!tinyhome'){
         console.log('exactly');
         user = tags.username, printUser = tags.username;
