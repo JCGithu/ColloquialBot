@@ -196,11 +196,14 @@ let houseData = {
 };
 
 module.exports = (channel, tags, message, client) => {
-    let user = '';
+    let user = '', printUser = '';
+    console.log(message);
     if (message === '!tinyhome'){
-        user = tags.username;
+        console.log('exactly');
+        user = tags.username, printUser = tags.username;
     } else {
         user = message.split(' ')[1].replace('@', '').toLowerCase();
+        printUser = message.split(' ')[1].replace('@', '');
     }
     if (message.toLowerCase() === '!tinyhome arcasian investments') return '/me Arcasian investments owns... everything'
     if (houseData[user]){
@@ -208,7 +211,7 @@ module.exports = (channel, tags, message, client) => {
         if (houseData[user].num) num = `${houseData[user].num} houses`;
         if (houseData[user].name) name = ` called ${houseData[user].name}`;
         if (houseData[user].additional) district = district + houseData[user].additional;
-        return `${message.split(' ')[1].replace('@', '')} has ${num}${name}${district}!`;
+        return `${printUser} has ${num}${name}${district}!`;
     }
     return `Sorry, no data for ${user} yet!`;
 };

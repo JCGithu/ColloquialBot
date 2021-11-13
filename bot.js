@@ -7,17 +7,12 @@ const client = new Discord.Client({
 });
 const tmi = require('tmi.js');
 
-const newRandomMessage = require('./tools/randomMessage');
 const getRandomInt = require('./tools/getRandomInt.js');
 const getDirectories = require('./tools/getDirectories');
 
 //Data Files
 const roles = require('./data/roles.json');
-//const basicTwitch = require('./twitch/colloquialowl/basic.json');
-//const listTwitch = require('./twitch/colloquialowl/lists.json');
-
 const listDiscord = require('./discord/colloquialowl/lists.json');
-
 const twitchChannels = ['colloquialowl']; 
 let repeatList = {}, loop = 1
 for (let tCh in twitchChannels){
@@ -56,7 +51,8 @@ client.on('ready', () => {
   twitch.on('message', (channel, tags, message, self) => {
     if(self) return;
     let channelName = channel.substring(1);
-    let channelCommands = commands[channelName]
+
+    let channelCommands = commands[channelName];
     if (message.charAt(0) === '!'){
       let command = message.substring(1).toLowerCase().split(' ')[0];
       for (let cc in channelCommands){
@@ -67,6 +63,7 @@ client.on('ready', () => {
         };
       }
     }
+
     if (repeatList[channel] === message){
       loop = ++loop;
       repeatList[channel] = message;
@@ -75,6 +72,7 @@ client.on('ready', () => {
       loop = 1;
       repeatList[channel] = message;
     }
+
   });
 });
 

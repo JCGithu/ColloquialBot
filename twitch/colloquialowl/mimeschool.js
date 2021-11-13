@@ -1,0 +1,1 @@
+module.exports = () => {return "Best seven years of my life"};
