@@ -11,8 +11,6 @@ module.exports = (fs, path, twitchChannels) => {
     }
     let serverList = Object.keys(output);
 
-
-
     for (let server of serverList){
         let dir = `./discord/${server}`
         let files = fs.readdirSync(dir);
@@ -20,8 +18,6 @@ module.exports = (fs, path, twitchChannels) => {
           output[server].commands.push(path.parse(file).name);
         }
     }
-
-    console.log(output);
 
     return output;
 };
