@@ -1,14 +1,15 @@
 let houseData = require('../../data/tinyhome.json');
 
-module.exports = (channel, tags, message, client) => {
-    let user = '', printUser = '', name = '', district = '', num = 'a house';
+async function tinyhome(message, ComfyDB){
 
     if (message === '!tinyhome'){
-        user = tags.username, printUser = tags.username;
-    } else {
-        user = message.split(' ')[1].replace('@', '').toLowerCase();
-        printUser = message.split(' ')[1].replace('@', '');
+        return 'Command needs a target!';
     }
+
+    let user = '', printUser = '', name = '', district = '', num = 'a house';
+    user = message.split(' ')[1].replace('@', '').toLowerCase();
+    printUser = message.split(' ')[1].replace('@', '');
+    
     if (message.toLowerCase() === '!tinyhome arcasian investments') return '/me Arcasian investments owns... everything'
     if (houseData[user]){
         if (houseData[user].district) district = ` in the ${houseData[user].district}`;
@@ -18,4 +19,6 @@ module.exports = (channel, tags, message, client) => {
         return `${printUser} has ${num}${name}${district}!`;
     }
     return `Sorry, no data for ${user} yet!`;
-};
+}
+
+module.exports = tinyhome;
