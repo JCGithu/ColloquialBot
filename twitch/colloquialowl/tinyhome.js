@@ -1,6 +1,3 @@
-let num = 'a house'; 
-let name = '';
-let district = '';
 let houseData = {
     "colloquialowl": {
         "name": "Owl House",
@@ -196,9 +193,9 @@ let houseData = {
 };
 
 module.exports = (channel, tags, message, client) => {
-    let user = '', printUser = '';
+    let user = '', printUser = '', name = '', district = '', num = 'a house';
+
     if (message === '!tinyhome'){
-        console.log('exactly');
         user = tags.username, printUser = tags.username;
     } else {
         user = message.split(' ')[1].replace('@', '').toLowerCase();
