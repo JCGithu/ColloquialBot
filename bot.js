@@ -102,7 +102,7 @@ client.on('message', async (msg) => {
     for (let i in discordData[server].commands){
       let commandName = discordData[server].commands[i];
       if (command != commandName) continue;
-      let codeToRun = require(`./discord/${server}/${commandName}`);
+      let codeToRun = require(`./discord/${server}/commands/${commandName}`);
       let running = await codeToRun(msg.content, ComfyDB)
       msg.channel.send(running);
     }
