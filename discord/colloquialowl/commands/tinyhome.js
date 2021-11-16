@@ -1,4 +1,4 @@
-let houseData = require('../../data/tinyhome.json');
+let houseData = require('../../../data/tinyhome.json');
 
 async function tinyhome(message, ComfyDB){
 

@@ -1,4 +1,4 @@
-const ordinal = require('../../tools/ordinalSuffix');
+const ordinal = require('../../../tools/ordinalSuffix');
 
 async function checkRank(message, ComfyDB){
     if (message === '!rank'){

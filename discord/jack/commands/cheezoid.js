@@ -1,4 +1,4 @@
-const getRandomInt = require("../../tools/getRandomInt")
+const getRandomInt = require("../../../tools/getRandomInt")
 
 let data = [
     "PETRIL ⛽",

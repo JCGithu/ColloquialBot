@@ -11,19 +11,19 @@ const ComfyDB = require( "comfydb" );
 //DB
 const DBURI = `mongodb+srv://colloquialbot:${process.env.DBPASS}@colloquialbot.dqesd.mongodb.net/User_Data?retryWrites=true&w=majority`
 
-const getRandomInt = require('./tools/getRandomInt.js');
+//Tools
 const getTwitchData = require('./tools/getTwitchData.js');
 const getDiscordData = require('./tools/getDiscordData.js');
 const chatStreak = require('./tools/chatStreak');
+const roleChange = require('./tools/roleChange.js');
+const defaultRole = require('./tools/defaultRole');
 
-//Data Files
-const roles = require('./data/roles.json');
+//Data
 const twitchChannels = ['colloquialowl']; 
-
-//Pull Data
 const twitchData = getTwitchData(fs, path, twitchChannels);
 const discordData = getDiscordData(fs, path);
 
+//Function Start
 client.on('ready', async() => {
   console.log('Discord bot is ready! ✅');
 
@@ -82,6 +82,7 @@ client.on('ready', async() => {
       }
     }
     
+    //Reward Redeem
     if (tags['custom-reward-id'] === 'a6280385-8c67-4448-b4ac-83cf956f7a07'){
       var codeToRun = require(`./twitch/points/plus.js}`);
       twitch.say(channel, codeToRun())
@@ -90,54 +91,30 @@ client.on('ready', async() => {
   });
 });
 
-client.on('guildMemberAdd', (user) => {
-  if (user.guild == twitch) user.roles.add('772498414553792522');
-});
+//DISCORD
+client.on('guildMemberAdd', (user) => defaultRole(user, discordData));
 
 client.on('message', async (msg) => {
-  if (msg.content.charAt(0) === '!'){
-    let command = msg.content.substring(1).toLowerCase().split(' ')[0];
-    for (let server in discordData){
-      if (discordData[server].id === msg.guild.id){
-        for (let i in discordData[server].commands){
-          let commandName = discordData[server].commands[i];
-          let codeToRun = require(`./discord/${server}/${commandName}`);
-          let running = await codeToRun(msg.content, ComfyDB)
-          if (command === commandName) msg.channel.send(running);
-        }
-      }
+  if (msg.content.charAt(0) != '!') return;
+  let command = msg.content.substring(1).toLowerCase().split(' ')[0];
+  for (let server in discordData){
+    if (discordData[server].id != msg.guild.id) continue;
+    for (let i in discordData[server].commands){
+      let commandName = discordData[server].commands[i];
+      if (command != commandName) continue;
+      let codeToRun = require(`./discord/${server}/${commandName}`);
+      let running = await codeToRun(msg.content, ComfyDB)
+      msg.channel.send(running);
     }
   }
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
-  roleChange(reaction, user, true);
+  roleChange(reaction, user, true, client, discordData);
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
-  roleChange(reaction, user, false);
+  roleChange(reaction, user, false, client, discordData);
 });
-
-async function roleChange(reaction, user, add) {
-  if (reaction.message.partial) await reaction.message.fetch();
-  if (reaction.partial) await reaction.fetch();
-  if (user.bot) return;
-
-  if (reaction.message.id === '785132049463115798' || reaction.message.id === '786549352809758730') {
-    for (role in roles) {
-      roleInfo = roles[role];
-      if (reaction.emoji.name === roleInfo.emoji) {
-        if (add) {
-          await reaction.message.guild.members.cache.get(user.id).roles.add(roleInfo.id);
-          console.log(`${user.username} added the role ${role} ${roleInfo.emoji}`);
-          return;
-        }
-        await reaction.message.guild.members.cache.get(user.id).roles.remove(roleInfo.id);
-        console.log(`${user.username} removed the role ${role} ${roleInfo.emoji}`);
-        return;
-      }
-    }
-  }
-}
 
 client.login(process.env.BOT_TOKEN);
