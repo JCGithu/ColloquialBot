@@ -17,11 +17,14 @@ const getDiscordData = require('./tools/getDiscordData.js');
 const chatStreak = require('./tools/chatStreak');
 const roleChange = require('./tools/roleChange.js');
 const defaultRole = require('./tools/defaultRole');
+let chatQueue = require('./tools/queue');
 
 //Data
 const twitchChannels = ['colloquialowl']; 
 const twitchData = getTwitchData(fs, path, twitchChannels);
 const discordData = getDiscordData(fs, path);
+
+
 
 //Function Start
 client.on('ready', async() => {
@@ -58,7 +61,9 @@ client.on('ready', async() => {
       for (let cc in channelCommands){
         if (command === channelCommands[cc]) {
           var codeToRun = require(`./twitch/${channelName}/${command}`);
-          twitch.say(channel, codeToRun(channel, tags, message, client));
+          chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
+            twitch.say(channel,output)
+          });
           return;
         };
       }
@@ -68,25 +73,22 @@ client.on('ready', async() => {
     if (message.charAt(0) === '+' || tags['custom-reward-id']){
       for (let p in twitchData.points){
         var codeToRun = require(twitchData.points[p].path);
-        if (command === p) {
-          let toPrint = await codeToRun(channel, tags, message, client, ComfyDB)
-          twitch.say(channel, toPrint);
+        if (command === p) {        
+          chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
+            twitch.say(channel,output)
+          });
           return;
         };
         if (!tags['custom-reward-id']) continue;
         if(tags['custom-reward-id'] === twitchData.points[p].reward){
-          let toPrint = await codeToRun(channel, tags, message, client, ComfyDB)
-          twitch.say(channel, toPrint);
+          chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
+            twitch.say(channel,output)
+          });
           return;
         }
       }
     }
-    
-    //Reward Redeem
-    if (tags['custom-reward-id'] === 'a6280385-8c67-4448-b4ac-83cf956f7a07'){
-      var codeToRun = require(`./twitch/points/plus.js}`);
-      twitch.say(channel, codeToRun())
-    }
+  
     chatStreak(twitchData, twitch, channel, channelName, message);
   });
 });
@@ -103,8 +105,11 @@ client.on('message', async (msg) => {
       let commandName = discordData[server].commands[i];
       if (command != commandName) continue;
       let codeToRun = require(`./discord/${server}/commands/${commandName}`);
-      let running = await codeToRun(msg.content, ComfyDB)
-      msg.channel.send(running);
+      chatQueue.push(codeToRun(msg.content, ComfyDB), function(output) {
+        //twitch.say(channel,output);
+        msg.channel.send(output);
+      });
+      //let running = await codeToRun()
     }
   }
 });

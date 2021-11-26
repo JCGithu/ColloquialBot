@@ -1,1 +1,5 @@
-module.exports = () => {return "Best seven years of my life"};
+async function run(channel, tags, message, client){
+    return `${tags.username} is currently attending Mime School.`
+}   
+
+module.exports = run;

@@ -22,10 +22,13 @@ let data = [
 "{user} will be back when we need them most."
 ];
 
-const getRandomInt = require("../../tools/getRandomInt")
-module.exports = (channel, tags, message, client) => {
+const getRandomInt = require("../../tools/getRandomInt");
+
+async function run(channel, tags, message, client){
     let user = tags.username
     let quote = data[getRandomInt(data.length)]
     quote.replace('{user}', user);
     return quote;
-};
+}
+
+module.exports = run;

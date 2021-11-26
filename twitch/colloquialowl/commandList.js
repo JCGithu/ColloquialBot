@@ -1,1 +1,5 @@
-module.exports = () => {return "https://colloquial.studio/commands"}
+async function run(){
+    return "https://colloquial.studio/commands"
+}
+
+module.exports = run;

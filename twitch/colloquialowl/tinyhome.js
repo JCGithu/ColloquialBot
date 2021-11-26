@@ -1,6 +1,6 @@
 let houseData = require('../../data/tinyhome.json');
 
-module.exports = (channel, tags, message, client) => {
+async function run(channel, tags, message, client){
     let user = '', printUser = '', name = '', district = '', num = 'a house';
 
     if (message === '!tinyhome'){
@@ -18,4 +18,6 @@ module.exports = (channel, tags, message, client) => {
         return `${printUser} has ${num}${name}${district}!`;
     }
     return `Sorry, no data for ${user} yet!`;
-};
+}
+
+module.exports = run;

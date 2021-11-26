@@ -13,4 +13,8 @@ let data = [
     "CHEEZOID ONLY KNOWS PAIN 😟"
 ]
 
-module.exports = () => {return data[getRandomInt(data.length)]}
+async function run(){
+    return data[getRandomInt(data.length)]
+}   
+
+module.exports = run;

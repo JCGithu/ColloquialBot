@@ -10,4 +10,8 @@ let data = [
     "Bye!"
 ]
 
-module.exports = () => { return data[getRandomInt(data.length)]}
+async function run (){
+    return data[getRandomInt(data.length)];
+}
+
+module.exports = run;

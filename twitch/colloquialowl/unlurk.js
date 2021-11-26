@@ -17,10 +17,14 @@ let data = [
     "{user} has reentered the arena."
 ];
 
-const getRandomInt = require("../../tools/getRandomInt")
-module.exports = (channel, tags, message, client) => {
-    let user = tags.username
-    let quote = data[getRandomInt(data.length)]
-    quote.replace('{user}', user);
+const getRandomInt = require("../../tools/getRandomInt");
+
+async function run(channel, tags, message, client){
+    let user = tags.username;
+    console.log(tags.username);
+    let quote = data[getRandomInt(data.length)];
+    quote = quote.replace('{user}', user);
     return quote;
-};
+}
+
+module.exports = run;
