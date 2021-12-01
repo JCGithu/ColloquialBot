@@ -61,6 +61,7 @@ client.on('ready', async() => {
       for (let cc in channelCommands){
         if (command === channelCommands[cc]) {
           var codeToRun = require(`./twitch/${channelName}/${command}`);
+          console.log(`!${command} run by ${tags.username}`);
           chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
             twitch.say(channel,output)
           });
@@ -73,7 +74,8 @@ client.on('ready', async() => {
     if (message.charAt(0) === '+' || tags['custom-reward-id']){
       for (let p in twitchData.points){
         var codeToRun = require(twitchData.points[p].path);
-        if (command === p) {        
+        if (command === p) {
+          console.log(`!${command} run by ${tags.username}`);     
           chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
             twitch.say(channel,output)
           });
@@ -106,10 +108,8 @@ client.on('message', async (msg) => {
       if (command != commandName) continue;
       let codeToRun = require(`./discord/${server}/commands/${commandName}`);
       chatQueue.push(codeToRun(msg.content, ComfyDB), function(output) {
-        //twitch.say(channel,output);
         msg.channel.send(output);
       });
-      //let running = await codeToRun()
     }
   }
 });
