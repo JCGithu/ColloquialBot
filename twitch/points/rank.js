@@ -4,6 +4,7 @@ async function checkRank(channel, tags, message, client, ComfyDB){
     let target = tags.username;
     if (message !== '+rank'){
         target = message.split(' ')[1];
+        target = target.replace('@', '');
     }
     let nameCheck = await ComfyDB.Get(target);
     if (!nameCheck) return `${target} isn't in the database!`;

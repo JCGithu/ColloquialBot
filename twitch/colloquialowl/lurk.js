@@ -27,7 +27,7 @@ const getRandomInt = require("../../tools/getRandomInt");
 async function run(channel, tags, message, client){
     let user = tags.username
     let quote = data[getRandomInt(data.length)]
-    quote.replace('{user}', user);
+    quote = quote.replace('{user}', user);
     return quote;
 }
 
