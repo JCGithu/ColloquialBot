@@ -5,7 +5,7 @@ async function setPoints(channel, tags, message, client, ComfyDB) {
     let nameCheck = await ComfyDB.Get(target);
     if (!nameCheck) return `${target} isn't in the database!`;
     await ComfyDB.Store( target, { username: target, points: amount } );
-    return `${target}'s points have been set to ${amount}`;
+    return `${target}'s acorns have been set to ${amount}`;
 };
 
 

@@ -10,9 +10,9 @@ async function checkRank(channel, tags, message, client, ComfyDB){
     if (!nameCheck) return `${target} isn't in the database!`;
     if (nameCheck.rank) {
         let rank = ordinal(nameCheck.rank);
-        return `${target} is ranked ${rank} with ${nameCheck.points} points`;
+        return `${target} is ranked ${rank} with ${nameCheck.points} acorns`;
     }
-    return `${target} has ${nameCheck.points} points, but they aren't ranked!`
+    return `${target} has ${nameCheck.points} acorns, but they aren't ranked!`
 };
 
 module.exports = checkRank;
