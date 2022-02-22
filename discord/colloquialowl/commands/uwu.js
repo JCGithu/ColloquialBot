@@ -9,8 +9,8 @@ function uwuinate(text) {
   text = text.replace('!uwu','');
   text = text.toLowerCase();
   var textArray = text.split(' ');
-  let finalText = textArray.map(x => uwuWord(x)).join(' ');
-  finalText = '/me' + finalText;
+  let finalText = textArray.map(x => uwuWord(x)).join('');
+  finalText = finalText;
   return finalText;
 }
 
