@@ -67,7 +67,7 @@ function uwuWord(word, index) {
 
   //Stutter
   if (uwu.length > 2 && uwu[0].match(/[a-z]/i)) {
-    random = Math.floor(Math.random() * 4);
+    random = Math.floor(Math.random() * 5);
     if (random == 0) uwu = uwu[0] + '-' + uwu;
   }
   return uwu;
