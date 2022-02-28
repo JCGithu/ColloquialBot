@@ -58,12 +58,17 @@ function uwuWord(word, index) {
     uwu += word + end + ' ';
   }
 
+  if (word === '*'){
+    uwu += kaomojiSparkles[getRandomInt(kaomojiSparkles.length)] + end + ' ';
+  }
+
   uwu = uwu.replace(/you're/g, "ur");
   uwu = uwu.replace(/youre/g, "ur");
   uwu = uwu.replace(/shit/g, "poopoo");
   uwu = uwu.replace(/asshole/g, "b-butthole");
   uwu = uwu.replace(/\bdad\b/g, "daddy");
   uwu = uwu.replace(/\bfather\b/g, "daddy");
+  uwu = uwu.replace(/\bcute\b/g, "cutie ;)");
 
   //Stutter
   if (uwu.length > 2 && uwu[0].match(/[a-z]/i)) {
