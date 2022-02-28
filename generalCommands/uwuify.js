@@ -1,3 +1,4 @@
+const getRandomInt = require('../tools/getRandomInt.js');
 
 var kaomojiJoy        = [" (* ^ ω ^)", " (o^▽^o)", " (≧◡≦)", " ☆⌒ヽ(*\"､^*)chu", " ( ˘⌣˘)♡(˘⌣˘ )", " xD"];
 var kaomojiEmbarassed = [" (⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄)..", " (*^.^*)..,", "..,", ",,,", "... ", ".. ", " mmm..", "O.o"];
@@ -23,41 +24,12 @@ function uwuWord(word, index) {
   if (lastChar == '.' || lastChar == '?' || lastChar == '!' || lastChar == ',') {
     word = word.slice(0, -1);
     end = lastChar;
+    if (end === '.' || end === '!') end = kaomojiJoy[getRandomInt(kaomojiJoy.length)];
+    if (end === '?') end = kaomojiConfuse[getRandomInt(kaomojiConfuse.length)];
+    if (end == ',') end = kaomojiEmbarassed[getRandomInt(kaomojiEmbarassed.length)];
 
-    if (end == '.') {
-      random = Math.floor(Math.random() * 3);
-      if (random == 0) {
-        random = Math.floor(Math.random() * kaomojiJoy.length);
-        end = kaomojiJoy[random];
-      }
-    }
-    else if (end == '?') {
-      random = Math.floor(Math.random() * 2);
-      if (random == 0) {
-        random = Math.floor(Math.random() * kaomojiConfuse.length);
-        end = kaomojiConfuse[random];
-      }
-    }
-    else if (end == '!') {
-      random = Math.floor(Math.random() * 2);
-      if (random == 0) {
-        random = Math.floor(Math.random() * kaomojiJoy.length);
-        end = kaomojiJoy[random];
-      }
-    }
-    else if (end == ',') {
-      random = Math.floor(Math.random() * 3);
-      if (random == 0) {
-        random = Math.floor(Math.random() * kaomojiEmbarassed.length);
-        end = kaomojiEmbarassed[random];
-      }
-    }
-
-    random = Math.floor(Math.random() * 4);
-    if (random == 0) {
-      random = Math.floor(Math.random() * kaomojiSparkles.length);
-      end = kaomojiSparkles[random];
-    }
+    let sparkle = getRandomInt(1);
+    if (sparkle) end = end + kaomojiSparkles[getRandomInt(kaomojiSparkles.length)];
   }
 
   if (word.indexOf('l') > -1) {
@@ -93,11 +65,10 @@ function uwuWord(word, index) {
   uwu = uwu.replace(/\bdad\b/g, "daddy");
   uwu = uwu.replace(/\bfather\b/g, "daddy");
 
+  //Stutter
   if (uwu.length > 2 && uwu[0].match(/[a-z]/i)) {
-    random = Math.floor(Math.random() * 6);
-    if (random == 0) {
-      uwu = uwu[0] + '-' + uwu;
-    }
+    random = Math.floor(Math.random() * 4);
+    if (random == 0) uwu = uwu[0] + '-' + uwu;
   }
   return uwu;
 }
