@@ -1,5 +1,5 @@
 const tiny = require('tiny-text');
-const uwuify = require('../../../generalCommands/uwwify.js');
+const uwuify = require('../../../generalCommands/uwuify.js');
 
 async function run(message, ComfyDB){
     message = message.replace('!tinyuwu', "");
