@@ -1,9 +1,9 @@
 const tiny = require('tiny-text');
-const uwu = require('./uwu.js');
+const uwuify = require('../../../generalCommands/uwwify.js');
 
 async function run(message, ComfyDB){
     message = message.replace('!tinyuwu', "");
-    let UWUED = await uwu(message, ComfyDB)
+    let UWUED = await uwuify(message)
     let output = tiny(UWUED);
     return `Here's your order! ${output}`;
 }
