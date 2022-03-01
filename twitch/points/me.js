@@ -1,11 +1,7 @@
 async function addPerson(channel, tags, message, client, ComfyDB) {
     let nameCheck = await ComfyDB.Get(tags.username);
     if (nameCheck) return `${tags.username} is already in the database!`;
-    if (message === '+me'){
-        await ComfyDB.Store( tags.username, { username: tags.username, points: 0 } );
-        return `${tags.username} has been added!`
-    }
-    await ComfyDB.Store( tags.username, { username: tags.username, points: 0 } );
+    await ComfyDB.Store( tags.username, { username: tags.username, points: 1 } );
     return `${tags.username} has been added!`;
 }
 
