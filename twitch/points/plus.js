@@ -11,7 +11,7 @@ async function plus(channel, tags, message, client, ComfyDB) {
     } else {
         await ComfyDB.Increment( "points", { by: 1, where: { username: { equals: target } } } );
     }
-    return `${tags.username} just gave ${target} an acorn! They now have ${(nameCheck.points + 1) + ' acorns'|| 'their first acorn!'}`;
+    return `${tags.username} just gave ${target} an acorn! They now have ${nameCheck.points ? (nameCheck.points + 1) + ' acorns' : 'their first acorn!'}`;
 };
 
 module.exports = plus;
