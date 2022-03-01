@@ -1,10 +1,6 @@
 module.exports = (fs, path, twitchChannels) => {
     let output = {
         "points": {
-            "add": {
-                "chat": true,
-                "path": `./twitch/points/addUser.js`
-            },
             "me": {
                 "chat": true,
                 "path": `./twitch/points/me.js`
