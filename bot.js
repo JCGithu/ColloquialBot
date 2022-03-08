@@ -51,7 +51,7 @@ client.on('ready', async() => {
   twitch.on("connected", () => {console.log('Twitch bot is ready! ✅')});
 
   twitch.on('message', async (channel, tags, message, self) => {
-    if(self) return;
+    if (self) return;
     let channelName = channel.substring(1);
     let channelCommands = twitchData[channelName].commands;
     let command = message.substring(1).toLowerCase().split(' ')[0];
@@ -96,7 +96,10 @@ client.on('ready', async() => {
 });
 
 //DISCORD
-client.on('guildMemberAdd', (user) => defaultRole(user, discordData));
+client.on('guildMemberAdd', (user) => {
+  defaultRole(user, discordData);
+  twitch.say('#colloquialowl', `${user.username} joined the Discord! Hi!`);
+});
 
 client.on('message', async (msg) => {
   if (msg.content.charAt(0) != '!') return;
