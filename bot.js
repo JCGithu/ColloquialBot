@@ -7,6 +7,7 @@ const client = new Discord.Client({
 });
 const tmi = require('tmi.js');
 const ComfyDB = require( "comfydb" );
+const ytdl = require( "ytdl-core" );
 
 //DB
 const DBURI = `mongodb+srv://colloquialbot:${process.env.DBPASS}@colloquialbot.dqesd.mongodb.net/User_Data?retryWrites=true&w=majority`
@@ -101,6 +102,8 @@ client.on('guildMemberAdd', (user) => {
   twitch.say('#colloquialowl', `${user.username} joined the Discord! Hi!`);
 });
 
+const musicQueue = new Map();
+
 client.on('message', async (msg) => {
   if (msg.content.charAt(0) != '!') return;
   let command = msg.content.substring(1).toLowerCase().split(' ')[0];
@@ -110,7 +113,7 @@ client.on('message', async (msg) => {
       let commandName = discordData[server].commands[i];
       if (command != commandName) continue;
       let codeToRun = require(`./discord/${server}/commands/${commandName}`);
-      chatQueue.push(codeToRun(msg.content, ComfyDB), function(output) {
+      chatQueue.push(codeToRun(msg.content, msg, ComfyDB), function(output) {
         msg.channel.send(output);
       });
     }

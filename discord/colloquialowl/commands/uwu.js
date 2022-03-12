@@ -1,6 +1,6 @@
 const uwuify = require('../../../generalCommands/uwuify.js');
 
-async function run(message, ComfyDB){
+async function run(message, content, ComfyDB){
   return uwuify(message);
 }
 

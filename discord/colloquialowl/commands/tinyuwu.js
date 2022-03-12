@@ -1,7 +1,7 @@
 const tiny = require('tiny-text');
 const uwuify = require('../../../generalCommands/uwuify.js');
 
-async function run(message, ComfyDB){
+async function run(message, content, ComfyDB){
     message = message.replace('!tinyuwu', "");
     let UWUED = await uwuify(message)
     let output = tiny(UWUED);

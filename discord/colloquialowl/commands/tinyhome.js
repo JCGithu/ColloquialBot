@@ -1,6 +1,6 @@
 let houseData = require('../../../data/tinyhome.json');
 
-async function tinyhome(message, ComfyDB){
+async function tinyhome(message, content, ComfyDB){
 
     if (message === '!tinyhome'){
         return 'Command needs a target!';

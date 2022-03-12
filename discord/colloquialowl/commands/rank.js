@@ -1,6 +1,6 @@
 const ordinal = require('../../../tools/ordinalSuffix');
 
-async function checkRank(message, ComfyDB){
+async function checkRank(message, content, ComfyDB){
     if (message === '!rank'){
         return 'Command needs a target!';
     }
