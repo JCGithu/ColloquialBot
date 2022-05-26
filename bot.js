@@ -60,35 +60,39 @@ client.on('ready', async() => {
     //COMMANDS
     if (message.charAt(0) === '!'){
       for (let cc in channelCommands){
-        if (command === channelCommands[cc]) {
-          var codeToRun = require(`./twitch/${channelName}/${command}`);
-          console.log(`!${command} run by ${tags.username}`);
-          chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
-            twitch.say(channel,output)
-          });
-          return;
-        };
+        if (command !== channelCommands[cc]) continue;
+        let codeToRun = require(`./twitch/${channelName}/${command}`);
+        console.log(`!${command} run by ${tags.username}`);
+        chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
+          twitch.say(channel,output)
+        });
+        return;
       }
     }
 
     //POINTS
-    if (message.charAt(0) === '+' || tags['custom-reward-id']){
+    if (message.charAt(0) === '+'){
       for (let p in twitchData.points){
-        var codeToRun = require(twitchData.points[p].path);
-        if (command === p) {
-          console.log(`!${command} run by ${tags.username}`);     
-          chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
-            twitch.say(channel,output)
-          });
-          return;
-        };
-        if (!tags['custom-reward-id']) continue;
-        if(tags['custom-reward-id'] === twitchData.points[p].reward){
-          chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
-            twitch.say(channel,output)
-          });
-          return;
-        }
+        if (command != p) continue;
+        let codeToRun = require(twitchData.points[p].path);
+        console.log(`!${command} run by ${tags.username}`);     
+        chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
+          twitch.say(channel,output)
+        });
+        return;
+      }
+    }
+
+    //REDEEMS
+    if (tags['custom-reward-id']){
+      for (let r in twitchData.redeems){
+        if (tags['custom-reward-id'] !== twitchData.redeems[r].reward) continue;
+        let codeToRun = require(twitchData.redeems[r].path);
+        console.log(`!${twitchData.redeems[r].name} run by ${tags.username}`);  
+        chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
+          twitch.say(channel,output)
+        });
+        return;
       }
     }
   

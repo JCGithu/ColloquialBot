@@ -17,8 +17,11 @@ module.exports = (fs, path, twitchChannels) => {
                 "chat": true,
                 "path": `./twitch/points/setPoints.js`
             },
+        }, 
+        "redeems": {
             "plus": {
                 "chat": false,
+                "name": "Point Add",
                 "reward": `a6280385-8c67-4448-b4ac-83cf956f7a07`,
                 "path": `./twitch/points/plus.js`
             }
