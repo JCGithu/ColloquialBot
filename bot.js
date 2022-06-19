@@ -108,7 +108,38 @@ client.on('guildMemberAdd', (user) => {
 
 const musicQueue = new Map();
 
+let steakStreak = 0;
+let lastSteak = '';
+let maxSteak = 0;
+
 client.on('message', async (msg) => {
+  
+  if (msg.author.bot) return;
+
+  if (msg.channel.id === "988143497037090836"){
+    if (msg.content === 'steak'){
+      if (lastSteak === msg.member.user.username){
+        msg.channel.send(`_No! You cannot steak twice! Bad._`);
+        return;
+      }
+      msg.react('🥩');
+      lastSteak = msg.member.user.username;
+      steakStreak++;
+      if (steakStreak > maxSteak) maxSteak = steakStreak;
+      console.log('steak: ' + steakStreak);
+    } else if (steakStreak > 1) {
+      let steakCheck = await ComfyDB.Get('steak');
+      if (steakCheck.steak < steakStreak) {
+        await ComfyDB.Store( target, { username: 'steak', steak: steakStreak });
+        msg.channel.send(`_You stacked ${steakStreak} steaks! A new record! ...but ${msg.member.user.username} broke it_`);
+      } else {
+        msg.channel.send(`_You stacked ${steakStreak} steaks! ...but ${msg.member.user.username} broke it_`);
+      }
+      
+      steakStreak = 0;
+    }
+  }
+
   if (msg.content.charAt(0) != '!') return;
   let command = msg.content.substring(1).toLowerCase().split(' ')[0];
   for (let server in discordData){
