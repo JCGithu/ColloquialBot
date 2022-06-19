@@ -116,8 +116,8 @@ client.on('message', async (msg) => {
   if (msg.author.bot) return;
 
   if (msg.channel.id === "988143497037090836"){
+    let steakCheck = await ComfyDB.Get('steak');
     if (msg.content === 'steak'){
-      let steakCheck = await ComfyDB.Get('steak');
       if (lastSteak === msg.member.user.username){
         msg.channel.send(`_No! You cannot steak twice! Bad._`);
         return;
