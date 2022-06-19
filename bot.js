@@ -110,7 +110,6 @@ const musicQueue = new Map();
 
 let steakStreak = 0;
 let lastSteak = '';
-let maxSteak = 0;
 
 client.on('message', async (msg) => {
   
@@ -118,19 +117,20 @@ client.on('message', async (msg) => {
 
   if (msg.channel.id === "988143497037090836"){
     if (msg.content === 'steak'){
+      let steakCheck = await ComfyDB.Get('steak');
       if (lastSteak === msg.member.user.username){
         msg.channel.send(`_No! You cannot steak twice! Bad._`);
         return;
       }
       msg.react('🥩');
       lastSteak = msg.member.user.username;
+      if (steakCheck.current <= steakStreak) steakStreak = steakCheck.current;
       steakStreak++;
-      if (steakStreak > maxSteak) maxSteak = steakStreak;
+      await ComfyDB.Store('steak', { current: steakStreak });
       console.log('steak: ' + steakStreak);
     } else if (steakStreak > 1) {
-      let steakCheck = await ComfyDB.Get('steak');
       if (steakCheck.steak < steakStreak) {
-        await ComfyDB.Store( target, { username: 'steak', steak: steakStreak });
+        await ComfyDB.Store('steak', { steak: steakStreak, current: 0});
         msg.channel.send(`_You stacked ${steakStreak} steaks! A new record! ...but ${msg.member.user.username} broke it_`);
       } else {
         msg.channel.send(`_You stacked ${steakStreak} steaks! ...but ${msg.member.user.username} broke it_`);
