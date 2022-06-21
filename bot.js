@@ -108,7 +108,7 @@ client.on('guildMemberAdd', (user) => {
 
 const musicQueue = new Map();
 
-let steakStreak = 0;
+let currentStreak = 0;
 let lastSteak = '';
 
 client.on('message', async (msg) => {
@@ -117,6 +117,7 @@ client.on('message', async (msg) => {
 
   if (msg.channel.id === "988143497037090836"){
     let steakCheck = await ComfyDB.Get('steak');
+    currentStreak = steakCheck.current;
     if (msg.content === 'steak'){
       if (lastSteak === msg.member.user.username){
         msg.channel.send(`_No! You cannot steak twice! Bad._`);
@@ -124,19 +125,16 @@ client.on('message', async (msg) => {
       }
       msg.react('🥩');
       lastSteak = msg.member.user.username;
-      if (steakCheck.current <= steakStreak) steakStreak = steakCheck.current;
-      steakStreak++;
-      await ComfyDB.Store('steak', { current: steakStreak });
-      console.log('steak: ' + steakStreak);
-    } else if (steakStreak > 1) {
-      if (steakCheck.steak < steakStreak) {
-        await ComfyDB.Store('steak', { steak: steakStreak, current: 0});
-        msg.channel.send(`_You stacked ${steakStreak} steaks! A new record! ...but ${msg.member.user.username} broke it_`);
+      await ComfyDB.Increment( "current", { by: 1, where: { username: { equals: 'steak ' } } } );
+    } else if (currentStreak > 1) {
+      if (steakCheck.highscore < currentStreak) {
+        await ComfyDB.Store('steak', { highscore: currentStreak, current: 0});
+        msg.channel.send(`_You stacked ${currentStreak} steaks! A new record! ...but ${msg.member.user.username} broke it_`);
       } else {
-        msg.channel.send(`_You stacked ${steakStreak} steaks! ...but ${msg.member.user.username} broke it_`);
+        await ComfyDB.Store('steak', { current: 0 });
+        msg.channel.send(`_You stacked ${currentStreak} steaks! ...but ${msg.member.user.username} broke it_`);
       }
-      
-      steakStreak = 0;
+      currentStreak = 0;
     }
   }
 
