@@ -63,7 +63,7 @@ client.on('ready', async() => {
         if (command !== channelCommands[cc]) continue;
         let codeToRun = require(`./twitch/${channelName}/${command}`);
         console.log(`Twitch: !${command} run by ${tags.username}`);
-        chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
+        chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
           twitch.say(channel,output)
         });
         return;
@@ -125,7 +125,7 @@ client.on('message', async (msg) => {
       }
       msg.react('🥩');
       lastSteak = msg.member.user.username;
-      console.log('increment');
+      console.log(`Discord: ${msg.member.user.username} upped the steaks.`);
       await ComfyDB.Increment( "current", { by: 1, key: "steak"});
     } else if (currentStreak > 1) {
       if (steakCheck.highscore < currentStreak) {
