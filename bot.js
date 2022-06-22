@@ -62,7 +62,7 @@ client.on('ready', async() => {
       for (let cc in channelCommands){
         if (command !== channelCommands[cc]) continue;
         let codeToRun = require(`./twitch/${channelName}/${command}`);
-        console.log(`!${command} run by ${tags.username}`);
+        console.log(`Twitch: !${command} run by ${tags.username}`);
         chatQueue.push(codeToRun(channel, tags, message, client), function(output) {
           twitch.say(channel,output)
         });
@@ -75,7 +75,7 @@ client.on('ready', async() => {
       for (let p in twitchData.points){
         if (command != p) continue;
         let codeToRun = require(twitchData.points[p].path);
-        console.log(`!${command} run by ${tags.username}`);     
+        console.log(`Twitch: !${command} run by ${tags.username}`);     
         chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
           twitch.say(channel,output)
         });
@@ -88,7 +88,7 @@ client.on('ready', async() => {
       for (let r in twitchData.redeems){
         if (tags['custom-reward-id'] !== twitchData.redeems[r].reward) continue;
         let codeToRun = require(twitchData.redeems[r].path);
-        console.log(`!${twitchData.redeems[r].name} run by ${tags.username}`);  
+        console.log(`Twitch: !${twitchData.redeems[r].name} run by ${tags.username}`);  
         chatQueue.push(codeToRun(channel, tags, message, client, ComfyDB), function(output) {
           twitch.say(channel,output)
         });
@@ -147,6 +147,7 @@ client.on('message', async (msg) => {
       let commandName = discordData[server].commands[i];
       if (command != commandName) continue;
       let codeToRun = require(`./discord/${server}/commands/${commandName}`);
+      console.log(`Discord: !${commandName} run by ${msg.member.user.username}`); 
       chatQueue.push(codeToRun(msg.content, msg, ComfyDB), function(output) {
         msg.channel.send(output);
       });
