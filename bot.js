@@ -125,7 +125,8 @@ client.on('message', async (msg) => {
       }
       msg.react('🥩');
       lastSteak = msg.member.user.username;
-      await ComfyDB.Increment( "current", { by: 1, where: { username: { equals: 'steak ' } } } );
+      console.log('increment');
+      await ComfyDB.Increment( "current", { by: 1, key: "steak"});
     } else if (currentStreak > 1) {
       if (steakCheck.highscore < currentStreak) {
         await ComfyDB.Store('steak', { highscore: currentStreak, current: 0});
