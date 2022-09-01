@@ -7,7 +7,6 @@ const client = new Discord.Client({
 });
 const tmi = require('tmi.js');
 const ComfyDB = require( "comfydb" );
-const ytdl = require( "ytdl-core" );
 
 //DB
 const DBURI = `mongodb+srv://colloquialbot:${process.env.DBPASS}@colloquialbot.dqesd.mongodb.net/User_Data?retryWrites=true&w=majority`
