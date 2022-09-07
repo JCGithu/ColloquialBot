@@ -22,14 +22,15 @@ let data = [
     "Tell this guy 'colloquialbot sent me' for a special discount, he knows the drill",
     "This generated message demands your attention",
     "In my own lane, thriving",
-    "Will the audio levels be right? Find out this week on the latest episode... "
+    "Will the audio levels be right? Find out this week on the latest episode... ",
+    "Where we droppin'?"
 ]
 
 async function run(channel, tags, message, client){
     if (!tags.badges.broadcaster) return 'Only the broadcaster can use this command.';
     client.channels.cache
     .get(`772497072653336586`)
-    .send(`<@&786544562193432628> ${data[getRandomInt(data.length)]} https://twitch.tv/colloquialowl`);
+    .send(`<@&786544562193432628> ${data[getRandomInt(data.length)]} <https://twitch.tv/colloquialowl>`);
 return 'Discord notified!'
 }
 
