@@ -30,7 +30,7 @@ async function run(channel, tags, message, client){
     if (!tags.badges.broadcaster) return 'Only the broadcaster can use this command.';
     client.channels.cache
     .get(`772497072653336586`)
-    .send(`<@&786544562193432628> ${data[getRandomInt(data.length)]} <https://twitch.tv/colloquialowl>`);
+    .send(`@everyone ${data[getRandomInt(data.length)]} <https://twitch.tv/colloquialowl>`);
 return 'Discord notified!'
 }
 
