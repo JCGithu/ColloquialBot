@@ -51,29 +51,25 @@ let song = [
   "We r the bruised and the tender"
 ];
 
-function emojiString(amount) {
+async function emojiString(amount) {
     let run = getRandomInt(amount);
-    let output = '';
+    let output = [''];
     for (let i = 0; i < run; i++){
-      let randomEmoji = emoji[getRandomInt(emoji.length)];
-      output += randomEmoji;
+      output.push(emoji[getRandomInt(emoji.length)]);
     }
     return output;
   }
 
 async function msn(channel, tags, message, client, ComfyDB){
-  console.log(message);
-  let user = tags.username;
-  let name = gothic(user);
 
   let randomLyric = song[getRandomInt(song.length)];
   let randomBonus = bonus[getRandomInt(bonus.length)];
-  let emotes = emojiString(5);
+  let emotes = await emojiString(5);
 
   let chance = getRandomInt(10);
   let bonusString = '';
-  if (chance = 7) bonusString = randomBonus;
-  let final = name + ': ' + bonusString + emotes + randomLyric + emotes + bonusString;
+  if (chance === 7) bonusString = randomBonus;
+  let final = gothic(tags.username + ': ' + bonusString + emotes.join('') + randomLyric + emotes.reverse().join('') + bonusString);
 
   return final;
 };
