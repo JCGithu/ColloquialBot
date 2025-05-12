@@ -1,6 +1,8 @@
 const gothic = require('../../tools/gothic');
 const getRandomInt = require("../../tools/getRandomInt");
 
+console.log("msn loaded");
+
 let emoji = [
   "🥀",
   "✨",
@@ -61,7 +63,7 @@ async function emojiString(amount) {
   }
 
 async function msn(channel, tags, message, client, ComfyDB){
-
+  console.log("msn ran");
   let randomLyric = song[getRandomInt(song.length)];
   let randomBonus = bonus[getRandomInt(bonus.length)];
   let emotes = await emojiString(5);

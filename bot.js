@@ -58,6 +58,7 @@ client.on('ready', async() => {
 
     //COMMANDS
     if (message.charAt(0) === '!'){
+      console.log('Twitch: !' + command + ' run by ' + tags.username);
       for (let cc in channelCommands){
         if (command !== channelCommands[cc]) continue;
         let codeToRun = require(`./twitch/${channelName}/${command}`);
