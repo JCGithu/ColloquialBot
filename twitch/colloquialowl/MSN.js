@@ -1,5 +1,5 @@
 const gothic = require('../../tools/gothic');
-const getRandomInt = require("../../tools/getRandomInt")
+const getRandomInt = require("../../tools/getRandomInt");
 
 let emoji = [
   "🥀",
@@ -20,15 +20,15 @@ let emoji = [
   "♡",
   "˚·",
   "✮",
-   "‧₊",
-   "☽",
-   "❀",
-   "｡˚",
-   "♱",
-   "⋆⋅☆⋅⋆",
-   "💋",
-   "˚♡˚", 
-]
+  "‧₊",
+  "☽",
+  "❀",
+  "｡˚",
+  "♱",
+  "⋆⋅☆⋅⋆",
+  "💋",
+  "˚♡˚"
+];
 
 let bonus = [
   "♥️ℒℴνℯ♥️",
@@ -49,7 +49,7 @@ let song = [
   "U r the smell b4 rain.",
   "My hopes r so high that ur kiss mght kill me.",
   "We r the bruised and the tender"
-]
+];
 
 function emojiString(amount) {
     let amount = getRandomInt(amount);
@@ -73,8 +73,9 @@ async function MSN(channel, tags, message, client, ComfyDB){
   let chance = getRandomInt(10);
   let bonusString = '';
   if (chance = 7) bonusString = randomBonus;
-  
-  return name + ': ' + bonusString + emotes + randomLyric + emotes + bonusString;
+  let final = name + ': ' + bonusString + emotes + randomLyric + emotes + bonusString;
+
+  return final;
 };
 
 module.exports = MSN;
