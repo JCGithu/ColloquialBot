@@ -40,10 +40,15 @@ let bonus = [
   "{¬ºཀ°}¬",
   "༺𓆩☠︎︎𓆪༻⋆",
   "˗ˏˋ ★ ˎˊ˗"
-]
+];
 
 let song = [
-  "I'm a creep",
+  "Im a creep",
+  "Im not OooOokkaaAAayYYyy",
+  "ur lipstick, his collar.",
+  "U r the smell b4 rain.",
+  "My hopes r so high that ur kiss mght kill me.",
+  "We r the bruised and the tender"
 ]
 
 function emojiString(amount) {
@@ -66,10 +71,10 @@ async function MSN(channel, tags, message, client, ComfyDB){
   let emotes = emojiString(5);
 
   let chance = getRandomInt(10);
-  let bonus = '';
-  if (chance = 7) bonus = randomBonus;
+  let bonusString = '';
+  if (chance = 7) bonusString = randomBonus;
   
-  return name + ': ' + bonus + emotes + randomLyric + emotes + bonus;
+  return name + ': ' + bonusString + emotes + randomLyric + emotes + bonusString;
 };
 
 module.exports = MSN;
