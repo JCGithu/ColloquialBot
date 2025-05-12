@@ -52,17 +52,17 @@ let song = [
 ];
 
 function emojiString(amount) {
-    let amount = getRandomInt(amount);
+    let run = getRandomInt(amount);
     let output = '';
-    for (let i = 0; i < amount; i++){
+    for (let i = 0; i < run; i++){
       let randomEmoji = emoji[getRandomInt(emoji.length)];
       output += randomEmoji;
     }
     return output;
   }
 
-async function MSN(channel, tags, message, client, ComfyDB){
-
+async function msn(channel, tags, message, client, ComfyDB){
+  console.log(message);
   let user = tags.username;
   let name = gothic(user);
 
@@ -78,5 +78,5 @@ async function MSN(channel, tags, message, client, ComfyDB){
   return final;
 };
 
-module.exports = MSN;
+module.exports = msn;
 
