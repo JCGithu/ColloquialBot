@@ -46,7 +46,7 @@ let bonus = [
 
 let song = [
   "Im a creep",
-  "Im not OooOokkaaAAayYYyy",
+  "Im not 𝘖𝘖ᵒᵒ𝘰𝘰𝘬𝘬𝘢ᵃᵃᵃ𝘢𝘢𝘠𝘠𝘠𝘠𝘺𝘺",
   "ur lipstick, his collar.",
   "U r the smell b4 rain.",
   "My hopes r so high that ur kiss mght kill me.",
@@ -63,15 +63,14 @@ async function emojiString(amount) {
   }
 
 async function msn(channel, tags, message, client, ComfyDB){
-  console.log("msn ran");
   let randomLyric = song[getRandomInt(song.length)];
   let randomBonus = bonus[getRandomInt(bonus.length)];
-  let emotes = await emojiString(5);
+  let emotes = await emojiString(7);
 
   let chance = getRandomInt(10);
   let bonusString = '';
   if (chance === 7) bonusString = randomBonus;
-  let final = gothic(tags.username + ': ' + bonusString + emotes.join('') + randomLyric + emotes.reverse().join('') + bonusString);
+  let final = gothic(bonusString + emotes.join('') + randomLyric + emotes.reverse().join('') + bonusString);
 
   return final;
 };
